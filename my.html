@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Ensure header and about section do not overlap */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth; /* Smooth scrolling */
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: background 0.3s ease; /* Smooth header background change */
+        }
+
+        header.scrolled {
+            background: #444; /* Darker background when scrolled */
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            color: #fff;
+            transition: color 0.3s ease; /* Smooth logo color change */
+        }
+
+        .logo:hover {
+            color: #0a66c2; /* Change logo color on hover */
+        }
+
+        nav {
+            position: relative;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+            transition: transform 0.3s ease; /* Smooth link hover effect */
+        }
+
+        .nav-links li:hover {
+            transform: scale(1.1); /* Enlarge link on hover */
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s ease; /* Smooth link color change */
+        }
+
+        .nav-links a:hover {
+            color: #0a66c2; /* Change link color on hover */
+        }
+
+        .linkedin {
+            color: #0a66c2;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                right: 0;
+                background: #333;
+                width: 100%;
+                padding: 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0;
+                padding: 15px;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* About Section Styles */
+        .about-section {
+            background: #f4f4f4;
+            padding: 80px 15px 60px; /* Increased top padding to avoid overlap with fixed header */
+            text-align: center;
+            margin-top: 60px; /* Ensure space below the fixed header */
+            transition: background 0.3s ease; /* Smooth section background change */
+        }
+
+        .about-section:hover {
+            background: #e0e0e0; /* Slightly change background on hover */
+        }
+
+        .about-section .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px; /* Space between text and photo */
+        }
+
+        .about-text {
+            flex: 1;
+            max-width: 600px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+            transition: transform 0.3s ease; /* Smooth animation */
+        }
+
+        .about-text:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+
+        .about-text h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .about-text p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .about-photo {
+            flex: 1;
+            max-width: 300px;
+            margin: 0 auto; /* Center the photo if needed */
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            border: 5px solid #333; /* Optional border for the photo */
+            transition: transform 0.3s ease; /* Smooth animation */
+        }
+
+        .about-photo img:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            background: #fff;
+            padding: 60px 15px;
+            text-align: center;
+            transition: background 0.3s ease; /* Smooth section background change */
+        }
+
+        .contact-section:hover {
+            background: #f9f9f9; /* Slightly change background on hover */
+        }
+
+        .contact-section .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .contact-info {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+        }
+
+        .contact-info a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Form Section Styles */
+        .contact-form-section {
+            background: #f4f4f4;
+            padding: 60px 15px;
+            text-align: center;
+            transition: background 0.3s ease; /* Smooth section background change */
+        }
+
+        .contact-form-section:hover {
+            background: #e0e0e0; /* Slightly change background on hover */
+        }
+
+        .contact-form-section .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .contact-form {
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+            transition: transform 0.3s ease; /* Smooth animation */
+        }
+
+        .contact-form:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease; /* Smooth button hover effect */
+        }
+
+        .form-group button:hover {
+            background-color: #555;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .contact-form {
+                padding: 15px;
+            }
+
+            .form-group button {
+                width: 100%;
+            }
+
+            .contact-section {
+                padding: 40px 15px;
+            }
+
+            .contact-info {
+                font-size: 1em;
+            }
+
+            .social-media a {
+                font-size: 1.2em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">SIMHAM KUMAR</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="https://www.linkedin.com/in/simham-kumar-62017b323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="linkedin">LinkedIn</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    &#9776;
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p>Hello! I'm Simham Kumar, a passionate student.I love creating websites,editing, and collaborating with others to bring innovative ideas to life.</p>
+                <p>Currently persuing Electronics and Communication Engineering from Rajiv Gandhi University Of Knowlege Technologies Rk Valley. I am constantly learning and evolving to stay on top of industry trends and technologies.</p>
+                <p>When I'm not working, you can find me watching movies,anime and webseries. Feel free to browse my portfolio and get in touch if you’d like to collaborate or learn more about my work.</p>
+            </div>
+            <div class="about-photo">
+                <!-- Replace with your photo -->
+                <img src="WhatsApp Image 2024-09-09 at 8.59.08 PM.jpeg" alt="Your Photo">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <div class="contact-info">
+                <p>Phone: <a href="tel:+1234567890">+91 8309902307</a></p>
+                <p>Email: <a href="mailto:youremail@example.com">simhamkumar9949@gmail.com</a></p>
+                <div class="social-media">
+                    <a href="https://www.linkedin.com/in/simham-kumar-62017b323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/yourprofile" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.instagram.com/vijay_777_ff?igsh=MWxtczMxeHRscXFnbw==" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact-form" class="contact-form-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <form action="https://formspree.io/f/mjkbzlrg" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Mobile Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Simham Kumar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        
+window.embeddedChatbotConfig = {
+chatbotId: "xwlQprtw0qBRzh1CyTOGU",
+domain: "www.chatbase.co"
+}
+</script>
+<script
+src="https://www.chatbase.co/embed.min.js"
+chatbotId="xwlQprtw0qBRzh1CyTOGU"
+domain="www.chatbase.co"
+defer>
+
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        });
+
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
